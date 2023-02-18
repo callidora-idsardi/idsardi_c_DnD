@@ -45,12 +45,18 @@ function handleDragOver(e) {
 function handleDrop(e) { 
 	e.preventDefault();
 	console.log('dropped something on me');
-	// bug fix #1 should go here, and it's at most 3 lines of JS code
-
-	// this line is going to move the dragged piece from the left side of the board
-	// into whatever drop zone we choose. appendChild means "add element to the container"
+  
+	// Checks to see if the drop zone is already occupied
+	if (this.childNodes.length > 0) {
+	  console.log('Oh no! This drop zone is already occupied!');
+	  return false;
+	}
+  
+	// Move the dragged piece from the left side of the board into the drop zone
 	this.appendChild(draggedPiece);
-}
+  }
+  
+
 // step 2
 // event handling always goes at the bottom => 
 // how do we want users to interact with our app
@@ -67,6 +73,4 @@ puzzlePieces.forEach(piece => piece.addEventListener("dragstart", handleStartDra
 
 // add the dragover AND the drop event handling to the drop zones
 dropZones.forEach(zone => zone.addEventListener("dragover", handleDragOver));
-
-// add the drop event handling
 dropZones.forEach(zone => zone.addEventListener("drop", handleDrop));
