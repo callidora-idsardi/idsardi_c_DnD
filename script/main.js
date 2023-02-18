@@ -18,16 +18,33 @@ let theButtons = document.querySelectorAll("#buttonHolder img"),
 // step 3
 // functionality always goes in the middle -> how do we want
 // the app to behave?
+
 function changeBGImage() {
-	// the `` is a JavaScript template string. It tells the JS enging to evaluate the expression
-	// inside the braces - run that little bit of code. In this case it's just pulling the ID of the
-	// button we clicked on and putting it at the end of the image name (0, 1, 2, 3)
-	// and updating the background-image style of the puzzle board element.
-
-	// bug fix #2 should go here. it's at most 3 lines of JS code.
+	// Remove the puzzle pieces from the drop zones and put them back in the drag zone
+	dropZones.forEach(zone => {
+	  while (zone.firstChild) {
+		puzzleBoard.appendChild(zone.firstChild);
+	  }
+	});
+	puzzlePieces.forEach(piece => {
+	  if (!piece.parentNode.classList.contains("puzzle-board")) {
+		puzzleBoard.appendChild(piece);
+	  }
+	});
+  
+	// Move the puzzle pieces back to the original div
+	let puzzlePiecesDiv = document.querySelector(".puzzle-pieces");
+	puzzlePieces.forEach(piece => {
+	  if (piece.parentNode.classList.contains("puzzle-board")) {
+		puzzlePiecesDiv.appendChild(piece);
+		console.log('you have reset the puzzle pieces!'); 
+	  }
+	});
+  
+	// Update the background image of the puzzle board
 	puzzleBoard.style.backgroundImage = `url(images/backGround${this.id}.jpg)`;
-}
-
+  }
+  
 function handleStartDrag() { 
 	console.log('started dragging this piece:', this);
 
@@ -43,19 +60,19 @@ function handleDragOver(e) {
 }
 
 function handleDrop(e) { 
-	e.preventDefault();
-	console.log('dropped something on me');
-  
-	// Checks to see if the drop zone is already occupied
-	if (this.childNodes.length > 0) {
-	  console.log('Oh no! This drop zone is already occupied!');
-	  return false;
-	}
-  
-	// Move the dragged piece from the left side of the board into the drop zone
-	this.appendChild(draggedPiece);
+  e.preventDefault();
+  console.log('dropped something on me');
+
+  // Check if the drop zone is already occupied
+  if (this.childNodes.length > 0) {
+    console.log('This drop zone is already occupied!');
+    return false;
   }
-  
+
+  // Move the dragged piece from the left side of the board into the drop zone
+  this.appendChild(draggedPiece);
+}
+
 
 // step 2
 // event handling always goes at the bottom => 
