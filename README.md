@@ -30,7 +30,7 @@ Puzzle pieces remain in the dropzone when selecting a new puzzle. We need to fig
 
 ## Credits
 
-Callidroa Idsardi 
+Callidora Idsardi 
 
 ## License
 MIT
